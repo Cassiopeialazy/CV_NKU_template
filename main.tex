@@ -1,0 +1,245 @@
+\documentclass[12pt]{article}
+
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{calc}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{fontspec}
+\usepackage{fontawesome5}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{fancybox}
+
+\hypersetup{hidelinks}
+
+%%%%%%%%%%%%%%%%%%%%
+% 设置
+%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\parindent}{0pt}					% 取消全局段落缩进
+\pagenumbering{gobble}						% 取消页码显示
+\setlist[itemize]{nosep                     % 取消 itemize 的默认间距
+    , before={\vspace*{-\parskip}}          % 取消 itemize 和后续段落之间的空白
+    , leftmargin=*}		                    % 取消 itemize 的左边距
+\setlist[enumerate]{leftmargin=*}	        % 取消 enumerate 的左边距
+\renewcommand{\arraystretch}{1.2}           % 设置表格行间距
+\linespread{1.2}                           % 设置正文行间距
+
+\titleformat{\section}					    % 将原标题前面的数字取消了
+  {\LARGE\bfseries\raggedright} 		      % 字体改为 LARGE，bold，左对齐
+  {}{0em}                      			  % 可用于添加全局标题前缀
+  {}                           			  % 可用于添加代码
+  [{\color{secondary_color}\titlerule}]     % 标题下方加一条线
+\titlespacing*{\section}{0cm}{*1.2}{*1.2}	% 标题左边留白，上方，下方
+
+\usepackage[
+	a4paper,
+	left=1.2cm,
+	right=1.2cm,
+	top=0.5cm,
+	bottom=1cm,
+	nohead
+]{geometry}                                 % 页面边距设置
+
+% 字体设置
+\setmainfont[
+    Path=fonts/,
+    Extension=.otf,
+    BoldFont=*-Bold,
+]{NotoSerifSC}
+
+% 自定义颜色
+\definecolor{primary_color}{RGB}{102, 0, 153}  % 南开紫
+\definecolor{secondary_color}{RGB}{255, 204, 0} % 金陵黄
+
+\newlength{\iconwidth}
+\setlength{\iconwidth}{1.5em}                   % 设置 section 标题部分图标占用的宽度
+
+%%%%%%%%%%%%%%%%%%%%
+% 文章内容
+%%%%%%%%%%%%%%%%%%%%
+
+% 学院
+\newcommand{\school}{人工智能学院 | College of Artificial Intelligence}
+
+% 联系方式
+\newcommand{\contact}{
+    \scriptsize
+    \textcolor{white}{
+        \faPhone \quad 138-0000-0000
+        \hspace{3.5em}
+        \faEnvelope \quad \href{mailto:student@example.com}{student@example.com}
+        \hspace{3.5em}
+        \faGithub \quad \href{https://github.com/username}{github.com/username}
+    }
+}
+
+
+\begin{document}
+
+    % 背景 Logo（半透明）
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[opacity=0.05] at(current page.center){  % opacity 调整透明度，0~1
+            \includegraphics[width=0.7\paperwidth, keepaspectratio]{images/Seal_of_Nankai_University.png}  
+        };
+    \end{tikzpicture}
+
+
+    %%%%%%%%%%%%%%%%%%%%
+    % 页眉、页脚和背景（如果有多页简历，请把页眉页脚和背景复制粘贴到第二页的内容之前）
+    %%%%%%%%%%%%%%%%%%%%
+
+    % 页眉：校标组合+学院名
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[anchor=north, inner sep=0pt](header) at (current page.north){
+            \includegraphics[width=\paperwidth]{images/header-nankai-lab.png}
+        };
+        \node[anchor=west](school_logo) at (header.west){
+            \hspace{0.5cm}
+            \includegraphics[width=0.15\textwidth]{images/newlogo.png}
+        };
+        \node[anchor=east](school_name) at(header.east){
+            \textcolor{white}{\textbf{\school}}
+            \hspace{0.5cm}
+        };
+    \end{tikzpicture}
+    \vspace{-3.5em}
+
+    % 页脚，联系方式
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[anchor=south, inner sep=0pt](footer) at (current page.south){
+            \includegraphics[width=\paperwidth]{images/footer-nankai-lab.png}
+        };
+        % 联系方式
+        \node[anchor=center] at(footer.center){\contact};
+    \end{tikzpicture}
+
+    % 背景
+    \begin{tikzpicture}[remember picture, overlay]
+        \node[opacity=0.05] at(current page.center){
+            \includegraphics[width=0.7\paperwidth, keepaspectratio]{images/newlogo.png}
+        };
+    \end{tikzpicture}
+
+    %%%%%%%%%%%%%%%%%%%%
+% 简历正文
+%%%%%%%%%%%%%%%%%%%%
+
+% --- 第一块：个人信息（左） + 照片（右） ---
+% 这里我们并排两个 minipage
+\begin{minipage}[t]{0.86\textwidth}
+    \section[个人信息]{\makebox[\iconwidth][c]{\color{primary_color}{\faUser}}\quad 个人信息}
+    \begin{minipage}[t]{0.5\textwidth}
+        \textbf{姓\qquad 名}：千早爱音
+        
+        \vspace{0.5em}
+        \textbf{出生年月}：2004.09.08
+    \end{minipage}
+    \begin{minipage}[t]{0.45\textwidth}
+        \textbf{性\qquad 别}：女
+        
+        \vspace{0.5em}
+        \textbf{政治面貌}：群众 / 共青团员
+    \end{minipage}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.12\textwidth}
+    \vspace{0.1em} % 调整照片上下位置
+    \setlength{\fboxsep}{0pt}
+    \doublebox{\includegraphics[width=\linewidth]{images/Anon.png}}
+\end{minipage}
+
+\vspace{0 em}
+
+% --- 第二块：教育背景（重点：它不在任何 minipage 里面，所以自动横跨全页） ---
+\section[教育背景]{\makebox[\iconwidth][c]{\color{primary_color}{\faGraduationCap}}\quad 教育背景}
+
+{\large \textbf{南开大学}} \quad 本科 \hfill 20XX年9月--20XX年6月 \\
+人工智能学院 \quad 智能科学与技术 \hfill \textbf{GPA：3.8 / 4.0}
+
+\begin{itemize}
+    \item \textbf{主修课程}：高等数学(4.0)、线性代数(4.0)、概率论与数理统计(4.0)、数据结构(4.0)、机器学习(4.0)\\深度学习(4.0)、强化学习(4.0)、算法设计(4.0)、微分方程与复变函数(4.0)、自动控制原理(4.0)
+    \item \textbf{专业排名}：前 10\% \hspace{4em} \textbf{英语水平}：CET-6 / IELTS / TOEFL
+\end{itemize}
+
+
+\vspace{-0.7em}
+
+% --- 第三块：其他内容（竞赛、项目等） ---
+\section[竞赛经历]{\makebox[\iconwidth][c]{\color{primary_color}{\faAtom}}\quad 竞赛经历}
+\begin{itemize}
+    \item 全国大学生数学建模竞赛 \hfill 国家级二等奖，20XX
+    \item 中国大学生计算机设计大赛 \hfill 国家级三等奖，20XX
+    \item 全国大学生算法设计与编程挑战赛 \hfill 国家级奖项，20XX
+    \item 美国大学生数学建模竞赛（MCM/ICM） \hfill Meritorious Winner，20XX
+\end{itemize}
+
+\vspace{-0.7em}
+
+\section[获奖经历]{\makebox[\iconwidth][c]{\color{primary_color}{\faTrophy}}\quad 获奖经历}
+\begin{itemize}
+    \item \textbf{公能奖学金/西南联大奖学金} \hfill 20XX--20XX
+    \item 三好学生 / 优秀学生干部 / 科研创新类荣誉 \hfill 20XX--20XX
+\end{itemize}
+
+\vspace{-0.7em}
+
+\section[科研与项目经历]{\makebox[\iconwidth][c]{\color{primary_color}{\faFlask}}\quad 科研与项目经历}
+
+
+{\large \textbf{多目标优化与智能调度算法研究}}
+
+\begin{itemize}
+    \item \textbf{问题建模}：面向任务分配与路径规划场景，构建兼顾整体效率与负载均衡的多目标优化模型。
+    \item \textbf{算法设计}：基于群智能方法，引入动态参数调整与联合决策策略，提升算法收敛速度与解集质量。
+    \item \textbf{实验验证}：在公开基准数据集上对比多种经典方法，并通过统计检验分析算法性能与稳定性。
+\end{itemize}
+
+\vspace{0.4em}
+
+{\large \textbf{基于 Transformer 的轻量化文本分类系统}}
+
+\begin{itemize}
+    \item \textbf{模型构建}：基于预训练 Transformer 搭建文本分类流程，完成数据预处理、模型训练与推理部署。
+    \item \textbf{性能优化}：采用参数高效微调、学习率调度与类别不均衡处理方法，提升模型效果与训练效率。
+    \item \textbf{工程实现}：封装训练、验证与评估脚本，支持 Accuracy、Precision、Recall等指标统计。
+\end{itemize}
+
+\vspace{0.4em}
+
+{\large \textbf{检索增强生成（RAG）问答系统}}
+
+\begin{itemize}
+    \item \textbf{系统设计}：实现文档切分、向量检索、重排序与生成回答的完整 RAG 流程，并设计模块化接口。
+    \item \textbf{评估分析}：在公开问答数据集上比较不同检索策略与提示模板，分析准确率、召回率及推理成本。
+\end{itemize}
+
+\vspace{0.4em}
+
+{\large \textbf{基于 U-Net 的医学图像分割实验}}
+
+\begin{itemize}
+    \item \textbf{模型实现}：使用 PyTorch 复现 U-Net 网络，引入数据增强、Dice Loss 与类别不均衡处理策略。
+    \item \textbf{实验分析}：在公开医学影像数据集上完成训练与验证，并以 Dice、IoU 等指标评估及可视化结果。
+\end{itemize}
+
+\vspace{-0.7em}
+
+% --- 第四块：技能与评价 ---
+\section[技能特长]{\makebox[\iconwidth][c]{\color{primary_color}{\faWrench}}\quad 技能特长}
+\begin{itemize}
+    \item \textbf{深度学习框架}：熟悉 CNN、RNN、Transformer 等主流架构，具备模型搭建、训练调优经验。
+    \item \textbf{理论基础}：熟悉 BP、RL 等基本原理，掌握梯度传播、优化算法、策略更新与常见学习范式。
+    \item \textbf{编程能力}：熟悉 \textbf{Python} 等编程语言，具备算法实现、数据处理等实验能力；熟练使用 \textbf{LaTeX}。
+\end{itemize}
+%\end{minipage}
+%\hfill
+%\begin{minipage}[t]{0.35\textwidth}
+ %   \section[自我评价]{\makebox[\iconwidth][c]{\color{primary_color}{\faStar}}\quad 自我评价}
+  %  思维活跃，学习能力和适应能力出色，有很强的钻研精神，心态积极乐观，做事扎实，有志于取得更好的科研成果。
+%\end{minipage}
+
+
+
+\end{document}
